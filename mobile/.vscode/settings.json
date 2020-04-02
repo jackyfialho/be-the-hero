@@ -1,0 +1,5 @@
+{
+    "editor.suggest.showClasses": false,
+    "editor.suggest.showConstructors": false,
+    "editor.suggest.showEvents": false
+}
