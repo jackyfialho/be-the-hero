@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'; 
+import NumberFormat from 'react-number-format';
 
 import api from '../../services/api';
 
@@ -9,9 +10,12 @@ import './styles.css';
 import logoImg from '../../assets/logo.svg';
 
 export default function NewIncident(){
+    // const NumberFormat = require('react-number-format');
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [value, setValue] = useState('');
+    const [valorFormatado, setValorFormatado] = useState('');
 
     const history = useHistory();
 
@@ -25,6 +29,8 @@ export default function NewIncident(){
             description,
             value
         };
+
+        console.log(data);
 
         try {
             await api.post('incidents', data, {
@@ -67,10 +73,23 @@ export default function NewIncident(){
                         onChange={e => setDescription(e.target.value)} 
                     />
 
-                    <input 
+                    {/* <input 
                         placeholder="Valor em reais"
                         value={value}
                         onChange={e => setValue(e.target.value)} 
+                    /> */}
+
+                    <NumberFormat
+                        thousandSeparator={'.'}
+                        decimalSeparator={','}
+                        prefix={'R$ '}
+                        placeholder={'Valor'}
+                        value={valorFormatado}
+                        onValueChange={(values) => {
+                            const {formattedValue, value} = values;
+                            setValue(values.value);
+                            setValorFormatado(values.formattedValue);
+                        }}
                     />
 
 
